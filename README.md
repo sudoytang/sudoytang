@@ -33,8 +33,6 @@ Former **C++ engineer**, now exploring deeper into **low-level development**.
 
 ![GitHub Streak](https://streak-stats.demolab.com?user=sudoytang&theme=radical&hide_border=true)
 
-![Mood](https://img.shields.io/badge/dynamic/json?color=brightgreen&label=Today&query=%24.message&url=https%3A%2F%2Fapi.github.com%2Fzen)
-
 ---
 
 ## 📬 Contact
