@@ -23,7 +23,8 @@ Former **C++ engineer**, now exploring deeper into **low-level development**.
 
 ## 📊 GitHub Stats
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=sudoytang&show_icons=true&theme=radical)
+<!-- temporarily remove this due to service outage -->
+<!-- ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=sudoytang&show_icons=true&theme=radical) -->
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=sudoytang&layout=compact&theme=radical&v=2)
 
