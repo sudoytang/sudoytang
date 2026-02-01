@@ -21,20 +21,18 @@ Former **C++ engineer**, now exploring deeper into **low-level development**.
 
 ---
 
-## 📊 GitHub Stats
+<!-- ## 📊 GitHub Stats -->
 
 <!-- temporarily remove this due to service outage -->
 <!-- ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=sudoytang&show_icons=true&theme=radical) -->
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=sudoytang&layout=compact&theme=radical&v=2)
+<!-- ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=sudoytang&layout=compact&theme=radical&v=2) -->
 
----
 
-## ⚡ Activity
+<!-- ## ⚡ Activity -->
 
-![GitHub Streak](https://streak-stats.demolab.com?user=sudoytang&theme=radical&hide_border=true)
+<!-- ![GitHub Streak](https://streak-stats.demolab.com?user=sudoytang&theme=radical&hide_border=true) -->
 
----
 
 ## 📬 Contact
 
