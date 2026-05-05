@@ -17,7 +17,7 @@ Former **C++ engineer**, now exploring deeper into **low-level development**.
 ![Verilog](https://img.shields.io/badge/HDL-Verilog-FF6600?style=flat&logoColor=white)
 
 
-🛠️ Currently learning: **LLVM**, **CUDA**
+🛠️ Currently learning: **Linux Kernel Internals**, **ARM64**, **RISC-V OS Dev**
 
 ---
 
