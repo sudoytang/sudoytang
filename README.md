@@ -26,13 +26,13 @@ Former **C++ engineer**, now exploring deeper into **low-level development**.
 | Project | Description |
 |---------|-------------|
 | [copyfail-arm64](https://github.com/sudoytang/copyfail-arm64) | Analysis and ARM64 reproduction of Copy Fail (CVE-2026-31431) |
-| [riscv_osdev](https://github.com/sudoytang/riscv_osdev) | RISC-V operating system development |
+| [riscv_osdev](https://github.com/sudoytang/riscv_osdev) | Yet another RISC-V operating system development |
 | [speakboard-sw](https://github.com/sudoytang/speakboard-sw) | Speakboard client |
 | [mnist_training_rs](https://github.com/sudoytang/mnist_training_rs) | Learn to write a FNN with back propagation in Rust! |
 
 ## 📝 Recent Posts
 
-- [Copy Fail on ARM64: From x86 Exploit to Cross-Architecture Reproduction](https://github.com/sudoytang/copyfail-arm64/blob/main/docs/post.md) — A beginner-friendly walkthrough of CVE-2026-31431 and porting its exploit to ARM64.
+- [2026-05-05] [Copy Fail on ARM64: From x86 Exploit to Cross-Architecture Reproduction](https://github.com/sudoytang/copyfail-arm64/blob/main/docs/post.md) — A beginner-friendly walkthrough of CVE-2026-31431 and porting its exploit to ARM64.
 
 ---
 
