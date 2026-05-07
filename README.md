@@ -39,4 +39,5 @@ Former **C++ engineer**, now exploring deeper into **low-level development**.
 ## 📬 Contact
 
 - Email: [yushun.tang@foxmail.com](mailto:yushun.tang@foxmail.com)
+- LinkedIn: [https://www.linkedin.com/in/yushun-tang](https://www.linkedin.com/in/yushun-tang/)
 
