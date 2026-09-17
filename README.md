@@ -8,11 +8,11 @@ GPU virtual platform engineer interested in virtualization, operating systems, c
 
 ## Featured
 
-- `2026-05-05` [Copy Fail on ARM64: From x86 Exploit to Cross-Architecture Reproduction](https://github.com/sudoytang/copyfail-arm64/blob/main/docs/post.md) — A walkthrough of CVE-2026-31431 and the work needed to reproduce its exploit on ARM64.
+- `2026-05-05` [Copy Fail on ARM64: Understanding and Porting CVE-2026-31431](posts/copy-fail-arm64.md)
 
 ## Recent Posts
 
-- `2026-05-05` [Copy Fail on ARM64: From x86 Exploit to Cross-Architecture Reproduction](https://github.com/sudoytang/copyfail-arm64/blob/main/docs/post.md) — A walkthrough of CVE-2026-31431 and the work needed to reproduce its exploit on ARM64.
+- `2026-05-05` [Copy Fail on ARM64: Understanding and Porting CVE-2026-31431](posts/copy-fail-arm64.md)
 
 ## Recent TILs
 

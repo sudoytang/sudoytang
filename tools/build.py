@@ -101,10 +101,22 @@ def parse_tags(value: str, path: Path) -> tuple[str, ...]:
     return tuple(item for item in items if item)
 
 
-def parse_markdown(path: Path) -> tuple[str, tuple[str, ...]]:
+def parse_published_at(value: str, path: Path) -> date:
+    value = parse_scalar(value)
+    try:
+        published_at = date.fromisoformat(value)
+    except ValueError as error:
+        raise BuildError(f"{path}: published_at must use YYYY-MM-DD") from error
+    if published_at.isoformat() != value:
+        raise BuildError(f"{path}: published_at must use YYYY-MM-DD")
+    return published_at
+
+
+def parse_markdown(path: Path) -> tuple[str, tuple[str, ...], date | None]:
     text = path.read_text(encoding="utf-8")
     title: str | None = None
     tags: tuple[str, ...] = ()
+    published_at: date | None = None
     body = text
 
     if text.startswith("---\n"):
@@ -124,6 +136,8 @@ def parse_markdown(path: Path) -> tuple[str, tuple[str, ...]]:
                 title = parse_scalar(value)
             elif key == "tags":
                 tags = parse_tags(value, path)
+            elif key == "published_at":
+                published_at = parse_published_at(value, path)
             else:
                 raise BuildError(f"{path}:{line_number}: unsupported metadata key {key!r}")
 
@@ -134,7 +148,7 @@ def parse_markdown(path: Path) -> tuple[str, tuple[str, ...]]:
     if not title:
         raise BuildError(f"{path}: add a title in front matter or a level-one heading")
 
-    return title, tags
+    return title, tags, published_at
 
 
 def scan_directory(directory_name: str, today: date) -> list[Entry]:
@@ -146,8 +160,11 @@ def scan_directory(directory_name: str, today: date) -> list[Entry]:
     for path in sorted(directory.glob("*.md")):
         if path.name.casefold() == "readme.md":
             continue
-        title, tags = parse_markdown(path)
-        created, updated = git_dates(path, today)
+        title, tags, published_at = parse_markdown(path)
+        git_created, updated = git_dates(path, today)
+        if published_at and published_at > today:
+            raise BuildError(f"{path}: published_at cannot be in the future")
+        created = published_at or git_created
         entries.append(
             Entry(
                 slug=path.stem,

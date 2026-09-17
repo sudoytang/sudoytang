@@ -15,13 +15,6 @@ recent_tils = 10
 # Entries may refer to a file stem in posts/ or to an external_posts slug.
 featured_posts = ["copy-fail-arm64"]
 
-[[external_posts]]
-slug = "copy-fail-arm64"
-title = "Copy Fail on ARM64: From x86 Exploit to Cross-Architecture Reproduction"
-url = "https://github.com/sudoytang/copyfail-arm64/blob/main/docs/post.md"
-date = 2026-05-05
-summary = "A walkthrough of CVE-2026-31431 and the work needed to reproduce its exploit on ARM64."
-
 [[projects]]
 name = "copyfail-arm64"
 url = "https://github.com/sudoytang/copyfail-arm64"

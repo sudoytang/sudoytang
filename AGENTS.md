@@ -40,12 +40,22 @@ tags: [cpp, linux, qemu]
 ```
 
 Only `title` and a one-line `tags` list are supported. A first-level Markdown
-heading may provide the title instead. Do not add manually maintained creation
-or update dates to article metadata.
+heading may provide the title instead. Do not normally add manually maintained
+creation or update dates to article metadata.
 
-The Copy Fail article is currently a transitional external post configured in
-`config.toml`. Its canonical content remains in `sudoytang/copyfail-arm64`; do
-not duplicate it here without an explicit migration decision.
+An imported older article may additionally declare:
+
+```markdown
+published_at: 2026-05-05
+```
+
+`published_at` is an explicit override for the displayed creation date and
+sorting. Use it only when an article was genuinely published before entering
+this repository. It does not alter Git history. Update dates remain Git-derived.
+
+The Copy Fail article was imported from `sudoytang/copyfail-arm64` with its
+original publication date. This repository now holds its canonical article
+content; the project repository retains only a moved notice.
 
 ## Dates
 
