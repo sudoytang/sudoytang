@@ -2,7 +2,7 @@
 
 # Yushun Tang
 
-GPU virtual platform engineer interested in virtualization, operating systems, computer architecture, and other low-level systems.
+GPU virtual platform engineer interested in operating systems, computer architecture, and other low-level systems.
 
 [Posts](#recent-posts) · [TIL](#recent-tils) · [GitHub](https://github.com/sudoytang)
 
