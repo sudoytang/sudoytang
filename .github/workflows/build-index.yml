@@ -1,0 +1,49 @@
+name: Build blog index
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "posts/**"
+      - "til/**"
+      - "config.toml"
+      - "tools/**"
+      - ".github/workflows/build-index.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blog-index-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the complete history
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
+
+      - name: Build generated Markdown
+        run: uv run --project tools --python 3.12 python tools/build.py
+
+      - name: Commit generated files
+        shell: bash
+        run: |
+          if [[ -z "$(git status --porcelain -- README.md toc/)" ]]; then
+            echo "Generated files are already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Update generated blog index [skip ci]"
+          git push

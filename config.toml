@@ -1,0 +1,36 @@
+name = "Yushun Tang"
+intro = """
+GPU virtual platform engineer interested in operating systems, computer
+architecture, and other low-level systems.
+"""
+
+github = "https://github.com/sudoytang"
+email = "yushun.tang@foxmail.com"
+linkedin = "https://www.linkedin.com/in/yushun-tang/"
+timezone = "Asia/Shanghai"
+
+posts_per_page = 10
+recent_tils = 10
+
+# Entries may refer to a file stem in posts/ or to an external_posts slug.
+featured_posts = ["copy-fail-arm64"]
+
+[[projects]]
+name = "copyfail-arm64"
+url = "https://github.com/sudoytang/copyfail-arm64"
+description = "Analysis and ARM64 reproduction of Copy Fail (CVE-2026-31431)."
+
+[[projects]]
+name = "riscv_osdev"
+url = "https://github.com/sudoytang/riscv_osdev"
+description = "A small RISC-V operating-system development project."
+
+[[projects]]
+name = "speakboard-sw"
+url = "https://github.com/sudoytang/speakboard-sw"
+description = "Client software for Speakboard."
+
+[[projects]]
+name = "mnist_training_rs"
+url = "https://github.com/sudoytang/mnist_training_rs"
+description = "A feed-forward neural network with backpropagation, written in Rust."
