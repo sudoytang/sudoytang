@@ -12,6 +12,7 @@ GPU virtual platform engineer interested in virtualization, operating systems, c
 
 ## Recent Posts
 
+- `2026-09-18` [GitHub Profile as a Blog](posts/github-profile-as-a-blog.md)
 - `2026-05-05` [Copy Fail on ARM64: Understanding and Porting CVE-2026-31431](posts/copy-fail-arm64.md)
 
 ## Recent TILs

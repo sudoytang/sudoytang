@@ -6,8 +6,9 @@ The optional front matter supports only `title` and a one-line `tags` list:
 
 ```markdown
 ---
-title: Why dlclose Is Not Process Restart
-tags: [cpp, linux, qemu]
+title: "Copy Fail on ARM64: Understanding and Porting CVE-2026-31431"
+tags: [linux, security, arm64]
+published_at: 2026-05-05
 ---
 
 Post body...
