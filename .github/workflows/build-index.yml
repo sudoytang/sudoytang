@@ -24,12 +24,12 @@ jobs:
 
     steps:
       - name: Check out the complete history
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v10
+        uses: astral-sh/setup-uv@v10.1.0
 
       - name: Build generated Markdown
         run: uv run --project tools --python 3.12 python tools/build.py
