@@ -1,0 +1,6 @@
+[project]
+name = "profile-blog-tools"
+version = "0.1.0"
+description = "Build the Markdown index for sudoytang/sudoytang"
+requires-python = ">=3.11"
+dependencies = []
