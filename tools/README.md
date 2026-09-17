@@ -13,6 +13,10 @@ already available.
 `README.md` and numbered `toc/page*.md` files are generated. Do not edit them
 directly. The generator never deletes other files under `toc/`.
 
+The GitHub Actions workflow normally runs the generator and commits changed
+indexes after source content is pushed. Running it locally remains useful for
+previewing a change.
+
 For committed content, creation is the oldest Git author date returned by
 `git log --follow`, and update is the newest. For a new or modified working-tree
 file, the build date in the timezone configured by `config.toml` is used as its
