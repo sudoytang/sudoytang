@@ -1,6 +1,6 @@
 ---
 title: "Mutex Identity: Why C++ Won't Move Them, and What Rust Does Instead"
-tags: [c++, rust, concurrency, synchronization]
+tags: [cpp, rust, concurrency, synchronization]
 ---
 
 # Mutex Identity: Why C++ Won't Move Them, and What Rust Does Instead

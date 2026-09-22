@@ -10,8 +10,15 @@ uv run --project tools python tools/build.py
 Running `python tools/build.py` directly also works when a suitable Python is
 already available.
 
-`README.md` and numbered `toc/page*.md` files are generated. Do not edit them
-directly. The generator never deletes other files under `toc/`.
+`README.md`, numbered `toc/page*.md` files, and `toc/tag/` indexes are
+generated. Do not edit them directly. Obsolete generated `toc/page*.md` and
+`toc/tag/` files are removed; other files under `toc/` are left alone.
+
+List tags without writing files:
+
+```sh
+uv run --project tools python tools/build.py tags
+```
 
 The GitHub Actions workflow normally runs the generator and commits changed
 indexes after source content is pushed. Running it locally remains useful for

@@ -9,6 +9,7 @@ email = "yushun.tang@foxmail.com"
 linkedin = "https://www.linkedin.com/in/yushun-tang/"
 timezone = "Asia/Shanghai"
 
+# Also the tag hub preview size and per-tag show-all page size.
 posts_per_page = 10
 recent_tils = 10
 
