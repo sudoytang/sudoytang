@@ -4,7 +4,7 @@
 
 GPU virtual platform engineer interested in operating systems, computer architecture, and other low-level systems.
 
-[Posts](#recent-posts) · [TIL](#recent-tils) · [GitHub](https://github.com/sudoytang)
+[Posts](#recent-posts) · [TIL](#recent-tils) · [Tags](#tags) · [GitHub](https://github.com/sudoytang)
 
 ## Featured
 
@@ -25,6 +25,10 @@ GPU virtual platform engineer interested in operating systems, computer architec
 - [riscv_osdev](https://github.com/sudoytang/riscv_osdev) — A small RISC-V operating-system development project.
 - [speakboard-sw](https://github.com/sudoytang/speakboard-sw) — Client software for Speakboard.
 - [mnist_training_rs](https://github.com/sudoytang/mnist_training_rs) — A feed-forward neural network with backpropagation, written in Rust.
+
+## Tags
+
+[`arm64`](toc/tag/arm64.md) (1 post) · [`blogging`](toc/tag/blogging.md) (1 post) · [`concurrency`](toc/tag/concurrency.md) (1 TIL) · [`cpp`](toc/tag/cpp.md) (1 TIL) · [`git`](toc/tag/git.md) (1 post) · [`github`](toc/tag/github.md) (1 post) · [`linux`](toc/tag/linux.md) (1 post) · [`python`](toc/tag/python.md) (1 post) · [`rust`](toc/tag/rust.md) (1 TIL) · [`security`](toc/tag/security.md) (1 post) · [`synchronization`](toc/tag/synchronization.md) (1 TIL)
 
 ## Contact
 

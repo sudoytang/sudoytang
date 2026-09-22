@@ -21,11 +21,13 @@ The design priority is:
 - `config.toml`: hand-written profile, project, and index configuration.
 - `tools/build.py`: the standard-library-only index generator.
 - `README.md`: generated profile and blog home page; do not edit directly.
-- `toc/page*.md`: generated pagination; do not edit directly.
+- `toc/page*.md`: generated post pagination; do not edit directly.
+- `toc/tag/`: generated per-tag hubs and show-all pages; do not edit directly.
 
 Do not introduce a second rendered copy of an article. Files under `posts/` and
 `til/` are both source of truth and the pages readers open. Generate indexes and
-navigation, not article bodies.
+navigation, not article bodies. Do not hand-edit `README.md` or anything under
+`toc/`.
 
 ## Content format
 
@@ -58,6 +60,36 @@ The Copy Fail article was imported from `sudoytang/copyfail-arm64` with its
 original publication date. This repository now holds its canonical article
 content; the project repository retains only a moved notice.
 
+## Tags
+
+Each tag must match `^[A-Za-z0-9_-]+$` (non-empty). Prefer short slug-like
+tags (`cpp`, not `c++`). The generator does not rewrite, alias, or fold tags
+silently. Distinct tag strings that `casefold` to the same value (for example
+`cpp` and `Cpp`) are an error. The build fails and names the file and tag, or
+both colliding strings.
+
+`posts_per_page` in `config.toml` is also the tag hub preview size and the
+show-all page size. Do not add a separate tag page-size key without a strong
+reason.
+
+Generated layout, only for tags that appear on at least one post or TIL:
+
+- Hub: `toc/tag/<tag>.md` — title is the tag string as-is; `## Posts` and
+  `## TILs` list up to `posts_per_page` newest entries (omit a section if
+  empty). If a kind has more than that many entries, the hub links to
+  `[Show all posts →](<tag>/posts/1.md)` or
+  `[Show all TILs →](<tag>/tils/1.md)`. Hubs have no Older/Newer links.
+- Show-all posts, only when that tag has more posts than `posts_per_page`:
+  `toc/tag/<tag>/posts/1.md`, `2.md`, … (page size `posts_per_page`, newest
+  first). Nav is Older/Newer between pages plus a link back to the tag hub.
+- Show-all TILs: `toc/tag/<tag>/tils/<n>.md`, same rules.
+
+List current tags (sorted, with counts) without writing files:
+
+```sh
+uv run --project tools python tools/build.py tags
+```
+
 ## Dates
 
 For a committed article:
@@ -80,16 +112,20 @@ Run from the repository root:
 uv run --project tools python tools/build.py
 ```
 
+CI runs the same generator with no arguments
+(`uv run --project tools --python 3.12 python tools/build.py`).
+
 After a change, run the build twice and confirm the second run produces no
 diff. Also run `git diff --check`. When testing pagination, ensure obsolete
-generated `toc/page*.md` files are removed without deleting unrelated files.
+generated `toc/page*.md` files and obsolete files under `toc/tag/` are removed
+without deleting unrelated files.
 
 ## Automation
 
 `.github/workflows/build-index.yml` runs after source or generator changes. It
 checks out full history, runs the generator, and commits changed `README.md` and
-`toc/` output with the GitHub Actions bot. Generated-only commits do not trigger
-another build.
+`toc/` output (including `toc/tag/`) with the GitHub Actions bot.
+Generated-only commits do not trigger another build.
 
 Humans may still run the build locally for preview, but normally only source
 content needs to be committed. Keep the workflow small; this is index
