@@ -17,7 +17,7 @@ GPU virtual platform engineer interested in operating systems, computer architec
 
 ## Recent TILs
 
-Short notes will appear here.
+- `2026-09-22` [Mutex Identity: Why C++ Won't Move Them, and What Rust Does Instead](til/mutex-identity-cpp-and-rust.md)
 
 ## Projects
 
