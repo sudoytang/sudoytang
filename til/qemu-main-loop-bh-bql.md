@@ -1,9 +1,9 @@
 ---
-title: "QEMU's Main Loop, BQL, and Asynchronous PCI Interrupts"
+title: "QEMU's Main Loop, vCPU Threads, BQL, and Bottom Halves"
 tags: [qemu, concurrency, virtualization]
 ---
 
-# QEMU's Main Loop, BQL, and Asynchronous PCI Interrupts
+# QEMU's Main Loop, vCPU Threads, BQL, and Bottom Halves
 
 A two-vCPU VM does not mean QEMU has two threads total, or that every device callback runs on one “main thread.” Separate the vCPU threads from QEMU's event loops.
 
