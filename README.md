@@ -17,6 +17,7 @@ GPU virtual platform engineer interested in operating systems, computer architec
 
 ## Recent TILs
 
+- `2026-09-28` [QEMU's Main Loop, vCPU Threads, BQL, and Bottom Halves](til/qemu-main-loop-bh-bql.md)
 - `2026-09-22` [Mutex Identity: Why C++ Won't Move Them, and What Rust Does Instead](til/mutex-identity-cpp-and-rust.md)
 
 ## Projects
@@ -28,7 +29,7 @@ GPU virtual platform engineer interested in operating systems, computer architec
 
 ## Tags
 
-[`arm64`](toc/tag/arm64.md) (1 post) · [`blogging`](toc/tag/blogging.md) (1 post) · [`concurrency`](toc/tag/concurrency.md) (1 TIL) · [`cpp`](toc/tag/cpp.md) (1 TIL) · [`git`](toc/tag/git.md) (1 post) · [`github`](toc/tag/github.md) (1 post) · [`linux`](toc/tag/linux.md) (1 post) · [`python`](toc/tag/python.md) (1 post) · [`rust`](toc/tag/rust.md) (1 TIL) · [`security`](toc/tag/security.md) (1 post) · [`synchronization`](toc/tag/synchronization.md) (1 TIL)
+[`arm64`](toc/tag/arm64.md) (1 post) · [`blogging`](toc/tag/blogging.md) (1 post) · [`concurrency`](toc/tag/concurrency.md) (2 TILs) · [`cpp`](toc/tag/cpp.md) (1 TIL) · [`git`](toc/tag/git.md) (1 post) · [`github`](toc/tag/github.md) (1 post) · [`linux`](toc/tag/linux.md) (1 post) · [`python`](toc/tag/python.md) (1 post) · [`qemu`](toc/tag/qemu.md) (1 TIL) · [`rust`](toc/tag/rust.md) (1 TIL) · [`security`](toc/tag/security.md) (1 post) · [`synchronization`](toc/tag/synchronization.md) (1 TIL) · [`virtualization`](toc/tag/virtualization.md) (1 TIL)
 
 ## Contact
 
