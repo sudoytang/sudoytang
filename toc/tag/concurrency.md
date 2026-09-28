@@ -4,5 +4,5 @@
 
 ## TILs
 
-- `2026-09-28` [QEMU's Main Loop, vCPU Threads, BQL, and Bottom Halves](../../til/qemu-main-loop-bh-bql.md)
+- `2026-09-28` [QEMU's Main Loop, BQL, and Asynchronous PCI Interrupts](../../til/qemu-main-loop-bh-bql.md)
 - `2026-09-22` [Mutex Identity: Why C++ Won't Move Them, and What Rust Does Instead](../../til/mutex-identity-cpp-and-rust.md)
