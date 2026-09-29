@@ -35,6 +35,14 @@ For traditional device-model code, the main-loop context is often the right plac
 
 PCI INTx is **level-triggered**. Keep the line asserted while an enabled interrupt cause remains pending; deassert it when the device's status/acknowledgment logic clears that cause. An asynchronous completion changes when QEMU updates the line, not the level-triggered model.
 
+## Crossing between QEMU instances
+
+When one QEMU instance raises an interrupt in a device owned by another instance in the same process, a direct call does not change threads. `pci_set_irq()` propagates the PCI IRQ synchronously on the calling thread; the guest interrupt handler runs later on the x86 vCPU selected by interrupt routing. Thus a direct call from an embedded RISC-V vCPU would run the host-side x86 PCI/IRQ path on that RISC-V vCPU thread.
+
+Prefer handing an IRQ event to the target instance: enqueue the desired IRQ state and schedule a BH on the target's owning `AioContext`. The target-side callback updates its device state and recomputes the INTx level under the synchronization required by that path. Use the same rule in the reverse direction. A BH scheduled on the source context does not transfer ownership, and a BH scheduled on a context that is not being polled will not run.
+
+The BQL serializes only code using that same lock; acquiring it does not transfer execution to the target instance's thread. In an embedded or multiply linked setup, verify whether both QEMU cores actually share the same BQL rather than assuming there is one lock per VM or one process-wide lock. Avoid waiting for the other instance while holding source-side locks, and define a consistent lock order for any locks that must cross this boundary.
+
 ## BH ordering and starvation
 
 Do not rely on a FIFO guarantee. QEMU's current implementation inserts pending BHs at the head of a singly linked list, so LIFO execution can be observed. That is an implementation detail, not an ordering contract for device code. For a reusable BH, scheduling it again while it is already pending is coalesced; it is not an event queue where every schedule call must produce a separate callback.
