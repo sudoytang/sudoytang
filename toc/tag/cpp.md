@@ -4,4 +4,5 @@
 
 ## TILs
 
+- `2026-10-21` [std::bind Silently Drops Extra Arguments](../../til/std-bind-ignores-extra-args.md)
 - `2026-09-22` [Mutex Identity: Why C++ Won't Move Them, and What Rust Does Instead](../../til/mutex-identity-cpp-and-rust.md)
