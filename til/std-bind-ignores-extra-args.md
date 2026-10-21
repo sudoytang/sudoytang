@@ -1,6 +1,6 @@
 ---
 title: "std::bind Silently Drops Extra Arguments"
-tags: [cpp]
+tags: [cpp, artisanal-coding]
 ---
 
 # std::bind Silently Drops Extra Arguments
