@@ -30,7 +30,7 @@ GPU virtual platform engineer interested in operating systems, computer architec
 
 ## Tags
 
-[`arm64`](toc/tag/arm64.md) (1 post) · [`blogging`](toc/tag/blogging.md) (1 post) · [`concurrency`](toc/tag/concurrency.md) (2 TILs) · [`cpp`](toc/tag/cpp.md) (2 TILs) · [`git`](toc/tag/git.md) (1 post) · [`github`](toc/tag/github.md) (1 post) · [`linux`](toc/tag/linux.md) (1 post) · [`python`](toc/tag/python.md) (1 post) · [`qemu`](toc/tag/qemu.md) (1 TIL) · [`rust`](toc/tag/rust.md) (1 TIL) · [`security`](toc/tag/security.md) (1 post) · [`synchronization`](toc/tag/synchronization.md) (1 TIL) · [`virtualization`](toc/tag/virtualization.md) (1 TIL)
+[`arm64`](toc/tag/arm64.md) (1 post) · [`artisanal-coding`](toc/tag/artisanal-coding.md) (1 TIL) · [`blogging`](toc/tag/blogging.md) (1 post) · [`concurrency`](toc/tag/concurrency.md) (2 TILs) · [`cpp`](toc/tag/cpp.md) (2 TILs) · [`git`](toc/tag/git.md) (1 post) · [`github`](toc/tag/github.md) (1 post) · [`linux`](toc/tag/linux.md) (1 post) · [`python`](toc/tag/python.md) (1 post) · [`qemu`](toc/tag/qemu.md) (1 TIL) · [`rust`](toc/tag/rust.md) (1 TIL) · [`security`](toc/tag/security.md) (1 post) · [`synchronization`](toc/tag/synchronization.md) (1 TIL) · [`virtualization`](toc/tag/virtualization.md) (1 TIL)
 
 ## Contact
 
