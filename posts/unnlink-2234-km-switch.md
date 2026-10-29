@@ -11,20 +11,16 @@ push the mouse past the edge of one screen and it shows up on the other
 computer, with the keyboard following along. No software, no network, just two
 USB cables.
 
-It mostly works. But my CapsLock setup broke as soon as I started using it, keys
-occasionally stayed "stuck" on the machine I had just left, and the mouse felt
-different through it. So I spent an evening logging raw input on both machines
-and running small controlled experiments to figure out what the box is
-actually doing.
-
-<!-- TODO: Minecraft recording showing how the mouse feels through the KM -->
-
-> **[Video placeholder]** *Minecraft, mouse through the UNNLINK 2234 KM switch:
-> how the camera feels when the mouse goes through the KM.*
+It mostly works. But two things I use every day broke as soon as I started
+using it: my CapsLock setup on Windows, and Minecraft. So I spent an evening
+with Codex logging raw input on both machines and running small controlled
+experiments to figure out what the box is actually doing.
 
 ---
 
-## Background: How a CapsLock Script Led Me Here
+## Background
+
+### Keyboard: a CapsLock script that stopped working
 
 I love one small macOS design decision: a short press of CapsLock switches
 between the Chinese and English input methods, while a long press of CapsLock
@@ -41,8 +37,17 @@ Ctrl+CapsLock no longer behaved like long presses and Ctrl+CapsLock.
 My first suspect was Logitech. My keyboard is an MX Keys on its own wireless
 receiver, and I assumed the keyboard or the receiver had some special
 CapsLock behavior of its own. Only after a proper side-by-side comparison
-(described below) did the blame land on the KM switch. That comparison turned into the
-rest of this post.
+(described below) did the blame land on the KM switch.
+
+### Mouse: Minecraft became unplayable
+
+The mouse story is simpler. With the mouse going through the KM, Minecraft
+became unplayable. This is what it looks like:
+
+<!-- TODO: Minecraft recording showing how the mouse feels through the KM -->
+
+> **[Video placeholder]** *Minecraft, mouse through the UNNLINK 2234 KM switch:
+> how the camera feels when the mouse goes through the KM.*
 
 ---
 
@@ -52,15 +57,20 @@ rest of this post.
 - **Devices:** a Logitech MX Keys and a wireless mouse, both plugged into the
   KM. A spare mouse plugged directly into Windows served as a control
   (and as an escape hatch).
+- **How we worked:** I ran the experiments together with Codex. Codex ran on
+  my Windows PC and could SSH over the LAN into the Mac, so it started the
+  logging scripts on both machines and collected the logs. For each round,
+  Codex told me exactly which physical actions to perform -- release
+  everything, press this, hold that, cross to the other screen, wait a few
+  seconds -- and I did them with the real keyboard and mouse. Codex then read
+  both logs and we compared them with what I saw on screen.
 - **Loggers:**
   - On Windows, a small C# tool listening to Raw Input and a low-level keyboard
-    hook. Raw Input reports which physical device each event came from, so I
+    hook. Raw Input reports which physical device each event came from, so we
     could tell the KM apart from the directly connected receiver or the spare
     mouse.
   - On the Mac, a C program using IOHID (raw HID values) and a Core Graphics
     event tap (what the window system sees).
-- **Procedure:** release everything, write down what I am about to do, do it
-  slowly with a few seconds between steps, then read both logs.
 
 One small detail about the hardware: the product listing says the switch uses
 an ASIX AX68002, while on the Mac it enumerates as "ASIX Electronics" with the
@@ -103,9 +113,9 @@ target is a 4K Windows display or a much smaller Mac desktop.
 ### Layer 2 on Windows: normalize to 0..65535
 
 Windows does not hand an absolute HID value to applications as-is. Raw Input
-normalizes absolute coordinates to 0..65535. I checked every distinct value
-I had logged -- 1283 distinct X values and 1428 distinct Y values -- and all
-of them are reproduced exactly by:
+normalizes absolute coordinates to 0..65535. Codex went through every
+distinct value in the logs -- 1283 distinct X values and 1428 distinct Y
+values -- and all of them are reproduced exactly by:
 
 ```text
 rawX = floor(hX * 65535 / 3840)
@@ -126,7 +136,8 @@ pixelY = floor(rawY * 2160 / 65536)
 On the Mac, the interesting space is Core Graphics' logical points. The
 built-in display currently reports bounds of 1470x956 points (rendered at
 2940x1912 pixels; the panel itself is 2560x1664 -- three different scales,
-none of which is the KM's). Pairing HID values with nearby CG events fits:
+none of which is the KM's). Codex paired HID values with nearby CG events,
+and they fit:
 
 ```text
 pointX ≈ hX * 1470 / 3840
@@ -134,8 +145,8 @@ pointY ≈ hY * 956  / 2140
 ```
 
 For example, HID `(1920, 801)` lands at CG `(735.00, 357.83)`. Of about 58,600
-time-adjacent candidate pairs, about 45,700 fit within 0.03 points combined
-error. The rest are most likely mismatched pairs from two asynchronous event
+time-adjacent candidate pairs Codex extracted, about 45,700 fit within 0.03
+points combined error. The rest are most likely mismatched pairs from two asynchronous event
 queues rather than a different mapping.
 
 Most consecutive HID steps are multiples of 3, but the greatest common divisor
@@ -242,8 +253,9 @@ instant CapsLock press/release to the currently active host, then restores
 whatever keys are still physically held.**
 
 That covers the other half of my broken script: by the time CapsLock arrives,
-the KM has already released Ctrl, so Ctrl+CapsLock reaches Windows as a plain
-CapsLock tap.
+the KM has already released Ctrl, so Ctrl+CapsLock reaches Windows as a plain,
+short CapsLock tap. My script interpreted it exactly that way and switched
+the input method between Chinese and English instead of toggling case.
 
 ### Switching hosts does not release keys
 
