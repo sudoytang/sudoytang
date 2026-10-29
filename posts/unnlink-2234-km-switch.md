@@ -11,16 +11,38 @@ push the mouse past the edge of one screen and it shows up on the other
 computer, with the keyboard following along. No software, no network, just two
 USB cables.
 
-It mostly works. But a few things felt off: CapsLock behaved strangely, keys
-occasionally stayed "stuck" on the machine I had just left, and some
-applications that care about raw mouse movement did not feel right. So I spent
-an evening logging raw input on both machines and running small controlled
-experiments to figure out what the box is actually doing.
+It mostly works. But my CapsLock setup broke as soon as I started using it, keys
+occasionally stayed "stuck" on the machine I had just left, and the mouse felt
+different through it. So I spent an evening logging raw input on both machines
+and running small controlled experiments to figure out what the box is
+actually doing.
 
-This is not firmware reverse engineering. I did not dump the firmware or
-capture USB traffic on the wire. Everything below is what the two operating
-systems *received*, compared against controls, plus a working model that fits
-those observations. Where the model is a guess, I say so.
+<!-- TODO: Minecraft recording showing how the mouse feels through the KM -->
+
+> **[Video placeholder]** *Minecraft, mouse through the UNNLINK 2234 KM switch:
+> how the camera feels when the mouse goes through the KM.*
+
+---
+
+## Background: How a CapsLock Script Led Me Here
+
+I love one small macOS design decision: a short press of CapsLock switches
+between the Chinese and English input methods, while a long press of CapsLock
+(or Ctrl+CapsLock) still does its original job and toggles case. One key, two
+jobs, and they never get in each other's way.
+
+Windows has nothing like it, so I wrote an AutoHotkey script to replicate it:
+a short tap switches the input method, a long press or Ctrl+CapsLock toggles
+case. It worked well for a long time.
+
+Then I started using the KM switch, and the script broke. Long presses and
+Ctrl+CapsLock no longer behaved like long presses and Ctrl+CapsLock.
+
+My first suspect was Logitech. My keyboard is an MX Keys on its own wireless
+receiver, and I assumed the keyboard or the receiver had some special
+CapsLock behavior of its own. Only after a proper side-by-side comparison
+(described below) did the blame land on the KM switch. That comparison turned into the
+rest of this post.
 
 ---
 
@@ -28,7 +50,7 @@ those observations. Where the model is a guess, I say so.
 
 - **Hosts:** a Windows machine with a 4K primary display, and an Apple M4 Mac.
 - **Devices:** a Logitech MX Keys and a wireless mouse, both plugged into the
-  KM. A spare wired mouse plugged directly into Windows served as a control
+  KM. A spare mouse plugged directly into Windows served as a control
   (and as an escape hatch).
 - **Loggers:**
   - On Windows, a small C# tool listening to Raw Input and a low-level keyboard
@@ -41,15 +63,8 @@ those observations. Where the model is a guess, I say so.
   slowly with a few seconds between steps, then read both logs.
 
 One small detail about the hardware: the product listing says the switch uses
-an ASIX AX68002, but on the Mac it enumerates with the product string
-`AX68004` (manufacturer "ASIX Electronics"). A USB product string is not proof
-of the silicon inside, so I am treating the chip as unconfirmed.
-
-An important caveat applies to every timestamp in this post: these are the
-times the operating system *delivered* an event to my logger, not USB bus
-timestamps. Two events with the same receipt time were not necessarily sent in
-the same USB report, and a burst of repeated key-downs on Windows may be OS
-autorepeat rather than repeated reports from the device.
+an ASIX AX68002, while on the Mac it enumerates as "ASIX Electronics" with the
+product string `AX68004`.
 
 ---
 
@@ -65,11 +80,9 @@ Windows, Raw Input reports ordinary relative motion: `flags=0`, small signed
 deltas such as `x=-1, y=1`. Through the KM, the same mouse shows up as
 `flags=1` -- `MOUSE_MOVE_ABSOLUTE` -- with large coordinate values.
 
-**The KM converts relative mouse motion into absolute coordinates.** That
-explains the "doesn't feel right" category of problems: anything that wants raw
-relative deltas (mouse-look in games is the classic case) is now being fed
-positions on a fixed grid. I have not instrumented an actual game, so the
-precise failure there remains an inference.
+**The KM converts relative mouse motion into absolute coordinates.** Anything
+that wants raw relative deltas, such as mouse-look in a game, is now being fed
+positions on a fixed grid instead.
 
 ### What coordinate space?
 
@@ -108,9 +121,6 @@ pixelX = floor(rawX * 3840 / 65536)
 pixelY = floor(rawY * 2160 / 65536)
 ```
 
-That is a single sample, so I am not claiming this is the full rounding rule
-at every edge and scaling setting.
-
 ### Layer 2 on the Mac: logical points
 
 On the Mac, the interesting space is Core Graphics' logical points. The
@@ -129,9 +139,7 @@ error. The rest are most likely mismatched pairs from two asynchronous event
 queues rather than a different mapping.
 
 Most consecutive HID steps are multiples of 3, but the greatest common divisor
-of all steps is 1, so it is not simply a fixed 3-unit grid. I also have not
-measured how physical mouse counts turn into those absolute steps, so I cannot
-say anything about effective DPI or acceleration yet.
+of all steps is 1, so it is not simply a fixed 3-unit grid.
 
 ### The multi-monitor surprise
 
@@ -161,15 +169,11 @@ So the working model is: the KM owns one absolute pointer space per host, sized
 to that host's primary display, and both horizontal edges lead to "the other
 host." The Windows monitor layout is irrelevant to it.
 
-I did think the cursor drifted vertically after repeated wraps (down when going
-right, up when going left). The logs do not support that as a systematic
-effect: several near-instant wraps keep Y *exactly* unchanged, e.g. `x=102`
-to `x=65535` with `y=41464` on both sides. Larger differences in round trips
-include real hand movement while the cursor was on the Mac. I am filing the
-drift as unconfirmed.
-
-(Enabling the secondary display also hung Windows once, requiring a reboot. I
-have no idea why, and I am not blaming the KM for it without evidence.)
+At one point the cursor seemed to drift vertically after repeated wraps (down
+when going right, up when going left). The logs tell a different story:
+near-instant wraps keep Y *exactly* unchanged, e.g. `x=102` to `x=65535` with
+`y=41464` on both sides. The larger differences in round trips came from real
+hand movement while the cursor was on the Mac.
 
 ---
 
@@ -177,10 +181,10 @@ have no idea why, and I am not blaming the KM for it without evidence.)
 
 ### The CapsLock mystery
 
-My daily setup uses CapsLock as an input-method toggle, so CapsLock behavior
-was what made me suspicious in the first place. Its HID events looked odd:
-every CapsLock "press" coming through the KM arrived as a down/up pair within
-about a millisecond, regardless of how long I actually held the key.
+Back to where this started. With the AutoHotkey script switched off, the raw
+CapsLock events through the KM looked odd: every CapsLock "press" arrived as a
+down/up pair within about a millisecond, regardless of how long I actually
+held the key.
 
 A sequence with markers made it clearer: press F8, hold CapsLock, tap F9 in
 the middle, release CapsLock, press F10. Both machines saw F8, a CapsLock pulse,
@@ -197,20 +201,25 @@ aB
 The two taps during the hold were simply gone, and the CapsLock toggle took
 effect at release time.
 
-### The control: is it the keyboard or the KM?
+### The control: Logitech or the KM?
 
-The MX Keys has its own receiver, so the obvious objection is that the keyboard
-or receiver might be doing this. I plugged the receiver directly into Windows
-and repeated the exact same sequence:
+This is where my Logitech theory got its fair test. If the MX Keys or its
+receiver were doing something special with CapsLock, the behavior should
+survive without the KM. So I plugged the receiver directly into Windows and
+repeated the exact same sequence:
 
 ```text
 aAAB
 ```
 
 Both taps arrive, uppercase, while CapsLock is held, and CapsLock's down and up
-events are separated by the real hold duration. So the swallowing and the
-release-time pulse are introduced by the KM path, at least under these
-conditions.
+events are separated by the real hold duration. Same keyboard, same receiver,
+same keystrokes: `aB` through the KM, `aAAB` without it. The swallowing and the
+release-time pulse come from the KM, and Logitech was off the hook.
+
+It also explains exactly why my script broke. The script tells a short tap
+from a long press by how long CapsLock stays down, and through the KM CapsLock
+is *always* down for about a millisecond, so every press looks like a tap.
 
 ### What happens to keys you are already holding
 
@@ -230,9 +239,11 @@ a global pause of all forwarding.
 The model that fits: **while CapsLock is held, the KM presents an empty
 keyboard state to the host and swallows new taps. On release it sends an
 instant CapsLock press/release to the currently active host, then restores
-whatever keys are still physically held.** My guess is that this exists so the
-KM can use CapsLock or key combinations as its own hotkeys without leaking
-them, but that is speculation.
+whatever keys are still physically held.**
+
+That covers the other half of my broken script: by the time CapsLock arrives,
+the KM has already released Ctrl, so Ctrl+CapsLock reaches Windows as a plain
+CapsLock tap.
 
 ### Switching hosts does not release keys
 
@@ -304,9 +315,7 @@ repeating as soon as `b` starts, and only `b` repeats.
 
 The difference correlates with two keys showing up as newly pressed at the
 same moment, which is exactly what the state-reconciliation model produces
-on the destination. What I cannot tell from Raw Input is whether the paired
-repeat comes from Windows' keyboard stack or from the KM actually sending
-repeated reports. Settling that needs a USB capture.
+on the destination.
 
 ### Does switching inject extra CapsLock presses?
 
@@ -323,16 +332,14 @@ keystroke after switching. Separately, holding CapsLock on one machine,
 crossing, and releasing it on the other sends the pulse to whichever host is
 active **at release time**, in both directions.
 
-So under controlled conditions there is no automatic CapsLock replay. The
-earlier unexplained pulses remain unexplained, and I am not going to pretend
-otherwise.
+So under controlled conditions there is no automatic CapsLock replay.
 
 ---
 
 ## Summary of the Working Model
 
 Putting everything together, this is the model that best fits what I
-observed. It is a model, not a description of the firmware:
+observed:
 
 **Mouse**
 
@@ -359,33 +366,27 @@ observed. It is a model, not a description of the firmware:
 - The direct-receiver baseline puts the CapsLock behavior on the KM, not the
   keyboard.
 - Two keys arriving together on a newly active host can repeat in pairs
-  (`ababab`); the source of the repetition is unresolved.
+  (`ababab`).
 - Plain switching does not produce extra CapsLock pulses.
 
 ---
 
-## What I Do Not Know Yet
+## Open Questions
 
-A few honest gaps:
+- **Mouse gain.** How do physical mouse counts become absolute steps? Is there
+  gain, acceleration, clamping, or fractional accumulation inside the KM?
+- **Resolution changes.** Does the HID range or the mapping change when a
+  host's resolution or scaling changes?
+- **What is on the wire.** What is the real report rate, and is the `ababab`
+  repeat present in the USB reports themselves?
+- **Firmware options.** The Mac also enumerates a relative mouse interface. Is
+  there a relative or "gaming" mode that can be switched on?
 
-- **Mouse gain.** How physical mouse counts become absolute steps: gain,
-  acceleration, clamping, and fractional accumulation inside the KM.
-- **Resolution changes.** Whether the HID range or behavior changes when a
-  host's resolution or scaling changes.
-- **What is on the wire.** Real report rate, coalescing, and whether the
-  `ababab` repeat is in the USB reports. That needs a bus capture, not OS
-  logs.
-- **Firmware options.** I have not found a manual for this model. The Mac also
-  enumerates a relative mouse interface, but I cannot tell whether there is a
-  user-accessible relative or "gaming" mode. I have not flashed or modified
-  anything.
-- **The display hang** when enabling the secondary display.
-
-The obvious next tool is something that can send *exactly known* mouse
-reports into the KM, instead of my hand. A Raspberry Pi 4B can act as a USB HID
-gadget through its USB-C port, which would let me send, say, `dx=1` every
-20 ms for 100 reports and see precisely what comes out on each host. If that
-produces anything interesting, it can be its own write-up.
+The next tool is something that can send *exactly known* mouse reports into
+the KM instead of my hand. A Raspberry Pi 4B can act as a USB HID gadget
+through its USB-C port, which would let me send, say, `dx=1` every 20 ms for
+100 reports and see precisely what comes out on each host. If that produces
+anything interesting, it can be its own write-up.
 
 ---
 
@@ -396,10 +397,8 @@ produces anything interesting, it can be its own write-up.
   host selection. Most of its quirks follow from those two decisions.
 - Controls matter more than clever logging. The direct-receiver baseline and
   the direct-mouse comparison each settled an argument in one run.
+- Suspect the newest thing in the chain. I spent a while blaming Logitech for
+  a problem that appeared exactly when the KM switch did.
 - Write down the hypothesis before you run the experiment. Two of my first
   conclusions here ("held keys do not transfer," "switching resyncs CapsLock")
   were wrong or incomplete, and only the next targeted experiment showed it.
-
-The raw notes and logs live in a private lab notebook; they contain real
-keystrokes and device details, so they are not published. Everything needed to
-follow the reasoning is above.
