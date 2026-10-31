@@ -12,6 +12,7 @@ GPU virtual platform engineer interested in operating systems, computer architec
 
 ## Recent Posts
 
+- `2026-10-30` [Poking at a Seamless KM Switch: What the UNNLINK 2234 Actually Sends](posts/unnlink-2234-km-switch.md)
 - `2026-09-18` [GitHub Profile as a Blog](posts/github-profile-as-a-blog.md)
 - `2026-05-05` [Copy Fail on ARM64: Understanding and Porting CVE-2026-31431](posts/copy-fail-arm64.md)
 
@@ -30,7 +31,7 @@ GPU virtual platform engineer interested in operating systems, computer architec
 
 ## Tags
 
-[`arm64`](toc/tag/arm64.md) (1 post) · [`artisanal-coding`](toc/tag/artisanal-coding.md) (1 TIL) · [`blogging`](toc/tag/blogging.md) (1 post) · [`concurrency`](toc/tag/concurrency.md) (2 TILs) · [`cpp`](toc/tag/cpp.md) (2 TILs) · [`git`](toc/tag/git.md) (1 post) · [`github`](toc/tag/github.md) (1 post) · [`linux`](toc/tag/linux.md) (1 post) · [`python`](toc/tag/python.md) (1 post) · [`qemu`](toc/tag/qemu.md) (1 TIL) · [`rust`](toc/tag/rust.md) (1 TIL) · [`security`](toc/tag/security.md) (1 post) · [`synchronization`](toc/tag/synchronization.md) (1 TIL) · [`virtualization`](toc/tag/virtualization.md) (1 TIL)
+[`arm64`](toc/tag/arm64.md) (1 post) · [`artisanal-coding`](toc/tag/artisanal-coding.md) (1 TIL) · [`blogging`](toc/tag/blogging.md) (1 post) · [`concurrency`](toc/tag/concurrency.md) (2 TILs) · [`cpp`](toc/tag/cpp.md) (2 TILs) · [`git`](toc/tag/git.md) (1 post) · [`github`](toc/tag/github.md) (1 post) · [`hardware`](toc/tag/hardware.md) (1 post) · [`hid`](toc/tag/hid.md) (1 post) · [`linux`](toc/tag/linux.md) (1 post) · [`macos`](toc/tag/macos.md) (1 post) · [`python`](toc/tag/python.md) (1 post) · [`qemu`](toc/tag/qemu.md) (1 TIL) · [`rust`](toc/tag/rust.md) (1 TIL) · [`security`](toc/tag/security.md) (1 post) · [`synchronization`](toc/tag/synchronization.md) (1 TIL) · [`usb`](toc/tag/usb.md) (1 post) · [`virtualization`](toc/tag/virtualization.md) (1 TIL) · [`windows`](toc/tag/windows.md) (1 post)
 
 ## Contact
 
