@@ -44,10 +44,10 @@ CapsLock behavior of its own. Only after a proper side-by-side comparison
 The mouse story is simpler. With the mouse going through the KM, Minecraft
 became unplayable. This is what it looks like:
 
-<!-- TODO: Minecraft recording showing how the mouse feels through the KM -->
+![Minecraft camera movement with the mouse going through the UNNLINK 2234 KM switch](../assets/unnlink-2234-km-switch/minecraft-mouse-through-km.webp)
 
-> **[Video placeholder]** *Minecraft, mouse through the UNNLINK 2234 KM switch:
-> how the camera feels when the mouse goes through the KM.*
+*Minecraft with the mouse going through the UNNLINK 2234 KM switch: the camera
+movement it produces when I look around.*
 
 ---
 
